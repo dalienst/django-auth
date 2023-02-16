@@ -3,13 +3,27 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
-    Hi {{ user.username }}!
-    <p><a href="{% url 'logout' %}">Log Out</a></p>
-{% else %}
-    <p>You are not logged in</p>
-    <a href="{% url 'login' %}">Log In</a><br>
-    <a href="{% url 'signup' %}">Sign up</a><br>
-    <a href="{% url 'password_reset' %}">Forgot Password?</a>
-{% endif %}
+    <nav>
+        {% if user.is_authenticated %}
+        <h2>Hi {{ user.username }}!</h2>
+        {% if user.is_student %}
+        <h5>You are a student</h5>
+        <a href="{% url 'student-profile' user.id %}">Your profile</a>
+        {% elif user.is_teacher %}
+        <h5>You are a teacher</h5>
+        <a href="{% url 'teacher-profile' user.id %}">Your profile</a>
+        {% elif user.is_staff %}
+        <h5>You are a staff</h5>
+        <a href="{% url 'users' %}">All Users</a><br>
+        {{ user.email }}
+        {% endif %}
+    
+        <p><a href="{% url 'logout' %}">Log Out</a></p>
+        {% else %}
+        <p>You are not logged in</p>
+        <a href="{% url 'login' %}">Log In</a><br>
+        <a href="{% url 'signup' %}">Sign up</a><br>
+        <a href="{% url 'password_reset' %}">Forgot Password?</a>
+        {% endif %}
+    </nav>
 {% endblock %}

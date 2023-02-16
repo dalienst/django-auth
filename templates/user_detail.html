@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>User Detail</title>{% endblock %}
+
+{% block content %}
+    <h3>User: {{user.username}}</h3>
+    <p><strong>Email: </strong>{{user.email}}</p>
+    <p><strong>Role: </strong>
+        {% if user.is_student %}Student{% elif user.is_teacher %}Teacher{% else %}Staff{% endif %}
+    </p>
+{% endblock %}
